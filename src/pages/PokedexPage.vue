@@ -1,5 +1,6 @@
 <template>
   <div class="d-flex justify-content-center">
+    <!-- div que contiene la imagen del pokemon -->
     <div class="card divD">
       <img
         v-if="imagePokemon"
@@ -8,6 +9,7 @@
         :alt="`imagen del pokemon ${namePokemon}`"
       />
 
+      <!-- información de nuestro pokemon, decidí usar solo los puntos de vida, ataque y defensa -->
       <h5 class="card-title">{{ namePokemon }}</h5>
       <p class="card-text">
         <strong>Puntos de Vida:</strong> {{ hp }}
@@ -16,10 +18,12 @@
         <br />
         <strong>Defensa:</strong> {{ defense }}
       </p>
+      <!-- establecemos nuestro botón para generar un pokemon nuevo -->
       <a @click="getRandomPokemon" class="btn btn-dark">Random</a>
     </div>
   </div>
 
+  <!-- se crea un pequeño cronómetro a fines de verificar el correcto funcionamiento -->
   <div class="d-flex justify-content-center mt-2">
     <p class="cronometro">{{ formattedTime }}</p>
   </div>
@@ -40,18 +44,19 @@ export default {
       totalPokemonCount: 0,
     };
   },
+  //mejor rendimiento para hacer operaciones
   computed: {
     formattedTime() {
       const minutes = Math.floor(this.counter / 60);
-      const seconds = this.counter % 60;
-      return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+      const seconds = this.counter % 60; // nos dará los segundos restantes que no forman parte de los minutos completos.
+      return `${minutes}:${seconds.toString().padStart(2, "0")}`; // devuelve el tiempo formateado como una cadena de texto en el formato "minutos:segundos"
     },
   },
   methods: {
     async fetchTotalPokemonCount() {
       try {
-        const response = await axios.get("https://pokeapi.co/api/v2/pokemon");
-        this.totalPokemonCount = response.data.count;
+        const response = await axios.get("https://pokeapi.co/api/v2/pokemon"); //realizamos petición a la api de pokemon
+        this.totalPokemonCount = response.data.count; // obtenemos la cantidad de pokemons que hay
       } catch (error) {
         console.error("Error fetching total Pokémon count:", error);
       }
@@ -62,11 +67,13 @@ export default {
         // Generar un número aleatorio dentro del límite del total de Pokémon
         const randomOffset = Math.floor(Math.random() * this.totalPokemonCount);
 
+        //mandamos a llamar el pokemon aleatorio
         const response = await axios.get(
           `https://pokeapi.co/api/v2/pokemon?limit=1&offset=${randomOffset}`
         );
 
         const randomPokemon = response.data.results[0];
+
         this.namePokemon = randomPokemon.name;
         this.getPokemonDetails(randomPokemon.url);
         this.counter = 30; // Reiniciar el contador a 30 segundos
@@ -77,6 +84,7 @@ export default {
 
     async getPokemonDetails(url) {
       try {
+        //asignamos los puntos de vida, ataque y defensa de nuestro pokemon
         const response = await axios.get(url);
         this.imagePokemon = response.data.sprites.front_default;
         this.hp = response.data.stats.find(
@@ -108,6 +116,7 @@ export default {
       }, 1000);
     },
   },
+
   async mounted() {
     // Obtener el total de Pokémon disponibles en la API
     await this.fetchTotalPokemonCount();

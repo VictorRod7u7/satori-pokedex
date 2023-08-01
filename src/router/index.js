@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+
+// importamos los componentes para usarlos en nuestro objeto de rutas
 import Pokedex from "@/pages/PokedexPage.vue";
 import Home from "@/pages/WelcomePage.vue";
 

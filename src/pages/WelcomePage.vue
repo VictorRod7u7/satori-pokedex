@@ -1,9 +1,12 @@
 <template>
   <img class="imgLogo" alt="Vue logo" src="../assets/SatoriLogo.jpg" />
 
+  <!-- Mensaje de bienvenida -->
+
   <div class="hello mt-4">
     <h2>Prueba Técnica Satori Tech</h2>
 
+    <!-- div con botón para usar vue-router y redirigir al pokedex-->
     <div>
       <br />
       <router-link to="/pokedex" class="btn btn-primary mt-5 txtB">

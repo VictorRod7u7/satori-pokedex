@@ -1,4 +1,5 @@
 <template>
+  <!-- página principal pero solo llamamos nuestro router para tener una gestión de rutas  -->
   <router-view />
 </template>
 
