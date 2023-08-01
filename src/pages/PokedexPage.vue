@@ -19,7 +19,7 @@
         <strong>Defensa:</strong> {{ defense }}
       </p>
       <!-- establecemos nuestro botón para generar un pokemon nuevo -->
-      <a @click="getRandomPokemon" class="btn btn-dark">Random</a>
+      <a @click="getRandomPokemon" class="btn btn-dark">Mostrar Pokemón</a>
     </div>
   </div>
 
